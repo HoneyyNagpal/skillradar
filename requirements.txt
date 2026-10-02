@@ -1,0 +1,9 @@
+pandas>=2.2
+numpy>=1.26
+scipy>=1.11
+SQLAlchemy>=2.0
+requests>=2.31
+python-dotenv>=1.0
+pytest>=8.0
+# only needed when DATABASE_URL points at PostgreSQL
+psycopg2-binary>=2.9

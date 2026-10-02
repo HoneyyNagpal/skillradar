@@ -1,0 +1,16 @@
+[project]
+name = "skillradar"
+version = "0.1.0"
+description = "Weekly hiring market intelligence pipeline for Indian tech jobs"
+requires-python = ">=3.10"
+dependencies = ["pandas>=2.2", "numpy", "scipy", "SQLAlchemy>=2.0", "requests", "python-dotenv"]
+
+[project.scripts]
+skillradar = "skillradar.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
