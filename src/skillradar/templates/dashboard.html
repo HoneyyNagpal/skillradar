@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SkillRadar India: what Indian tech employers ask for</title>
+<style>
+:root{--ink:#16212B;--paper:#F3F5F7;--surface:#FFFFFF;--rule:#D3DAE0;--muted:#586878;--up:#0B7A75;--down:#B23A2E;--bar:#2D5F8B;--warn:#FFF3D6;--warnink:#5C4300}
+@media (prefers-color-scheme:dark){:root{--ink:#E6ECF1;--paper:#10171D;--surface:#17212A;--rule:#2B3946;--muted:#98A8B7;--up:#3CBFB6;--down:#E58A7E;--bar:#6FA3D1;--warn:#3A2F10;--warnink:#F2D78C}}
+*{box-sizing:border-box}
+html{scroll-padding-top:1rem}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.55 ui-sans-serif,system-ui,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+main{max-width:64rem;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+h1,h2,.lede{font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;font-weight:600;letter-spacing:-.01em}
+h1{font-size:clamp(1.9rem,4vw,2.6rem);line-height:1.1;margin:0 0 .5rem}
+h2{font-size:1.5rem;margin:0 0 .25rem}
+.meta{color:var(--muted);font-size:.9rem;margin:0}
+.lede{font-size:clamp(1.25rem,2.4vw,1.6rem);line-height:1.35;font-weight:500;margin:1.75rem 0 0;max-width:46rem}
+section{margin-top:3.25rem;padding-top:1.5rem;border-top:1px solid var(--rule)}
+section>p.note{color:var(--muted);margin:.15rem 0 1.1rem;max-width:44rem}
+.banner{background:var(--warn);color:var(--warnink);border-left:4px solid currentColor;padding:.8rem 1rem;margin:1.25rem 0 0;font-size:.95rem}
+.controls{display:flex;flex-wrap:wrap;gap:.75rem 1.25rem;align-items:center;margin:0 0 1rem}
+label.f{display:flex;gap:.5rem;align-items:center;font-size:.9rem;color:var(--muted)}
+select{font:inherit;color:var(--ink);background:var(--surface);border:1px solid var(--rule);padding:.35rem .5rem;border-radius:4px}
+.chips{display:flex;flex-wrap:wrap;gap:.4rem;margin:0 0 1.25rem}
+.chip{font:inherit;font-size:.85rem;padding:.25rem .65rem;border:1px solid var(--rule);background:var(--surface);color:var(--ink);border-radius:999px;cursor:pointer}
+.chip[aria-pressed=true]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.chip:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--bar);outline-offset:2px}
+.plan{display:grid;grid-template-columns:minmax(11rem,15rem) 1fr;gap:1.5rem 2.5rem;align-items:start}
+@media (max-width:640px){.plan{grid-template-columns:1fr}}
+.big{font-family:"Iowan Old Style","Palatino Linotype",Georgia,serif;font-size:4rem;line-height:1;font-weight:600}
+.big small{font-size:1rem;color:var(--muted);font-family:inherit;font-weight:400;display:block;margin-top:.4rem;line-height:1.35}
+.steps{list-style:none;margin:0;padding:0}
+.steps li{display:grid;grid-template-columns:9rem 1fr 5.5rem;gap:.75rem;align-items:center;padding:.45rem 0;border-bottom:1px solid var(--rule)}
+.steps .bar{height:.7rem;background:var(--rule);position:relative}
+.steps .bar i{position:absolute;inset:0 auto 0 0;background:var(--bar)}
+.steps .bar b{position:absolute;inset:0 auto 0 0;background:var(--up)}
+.steps .gain{color:var(--up);font-variant-numeric:tabular-nums;text-align:right}
+.chart{position:relative;height:360px;background:var(--surface);border:1px solid var(--rule);padding:.5rem}
+table{width:100%;border-collapse:collapse;font-size:.92rem;font-variant-numeric:tabular-nums}
+th,td{text-align:left;padding:.45rem .6rem .45rem 0;border-bottom:1px solid var(--rule);vertical-align:middle}
+th{font-weight:600;color:var(--muted);font-size:.85rem}
+td.n,th.n{text-align:right;padding-right:.9rem}
+.mini{display:inline-block;height:.5rem;background:var(--bar);vertical-align:middle}
+.up{color:var(--up)}.down{color:var(--down)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:2rem}
+@media (max-width:760px){.two{grid-template-columns:1fr}}
+.scroll{overflow-x:auto}
+footer{margin-top:3.5rem;color:var(--muted);font-size:.88rem}
+h3{font-size:1rem;margin:0 0 .5rem}
+</style>
+</head>
+<body>
+<main>
+<header>
+  <h1>What Indian tech employers ask for</h1>
+  <p class="meta" id="meta"></p>
+  <div id="banner"></div>
+  <p class="lede">__HEADLINE__</p>
+</header>
+
+<section id="planner">
+  <h2>Skill gap planner</h2>
+  <p class="note">Pick the skills you already have. A posting counts as a fit when you hold at least <span id="thr"></span> of the skills it lists. The list below shows which single skill you should add next, one step at a time.</p>
+  <div class="controls">
+    <label class="f">Role <select id="p-role"></select></label>
+    <label class="f">Level <select id="p-level"></select></label>
+  </div>
+  <div class="chips" id="p-chips" role="group" aria-label="Skills you have"></div>
+  <div class="plan">
+    <div class="big" id="p-now"></div>
+    <div><h3 id="p-title"></h3><ol class="steps" id="p-steps"></ol></div>
+  </div>
+</section>
+
+<section id="demand">
+  <h2>Demand by role</h2>
+  <p class="note">Share of postings that mention each skill. Filter to a role to see what that job actually asks for.</p>
+  <div class="controls"><label class="f">Role <select id="d-role"></select></label></div>
+  <div class="chart"><canvas id="c-demand" aria-label="Skill demand bar chart"></canvas></div>
+</section>
+
+<section id="trends">
+  <h2>Rising and falling skills</h2>
+  <p class="note" id="t-note"></p>
+  <div class="controls"><label class="f"><input type="checkbox" id="t-ma" checked> Smooth with 4 week average</label></div>
+  <div class="chips" id="t-chips" role="group" aria-label="Skills to plot"></div>
+  <div class="chart"><canvas id="c-trend" aria-label="Skill share over time"></canvas></div>
+  <div class="two" style="margin-top:1.25rem"><div id="t-up"></div><div id="t-down"></div></div>
+</section>
+
+<section id="stacks">
+  <h2>Skills that travel together</h2>
+  <p class="note">Pairs that show up in the same postings far more often than chance allows. Ranked by the phi coefficient (an effect size that does not reward rare skills). Lift says how many times more often the pair appears together than independence would predict.</p>
+  <div class="scroll" id="pairs"></div>
+</section>
+
+<section id="levels">
+  <h2>Entry level versus senior</h2>
+  <p class="note">Share of entry-level and senior postings that mention a skill. Entry level means a fresher or intern title, or a minimum of one year or less.</p>
+  <div class="two"><div id="lv-entry"></div><div id="lv-senior"></div></div>
+</section>
+
+<section id="opportunity">
+  <h2>Where a new skill pays off first</h2>
+  <p class="note">A transparent heuristic, not a forecast: half entry-level demand (overall demand while there are too few entry-level postings to measure), a quarter recent growth, a quarter breadth across roles (number of role families where the skill appears in at least 10% of postings). Each component is shown so you can disagree with the weights.</p>
+  <div class="scroll" id="opp"></div>
+</section>
+
+<section id="cities">
+  <h2>Cities</h2>
+  <p class="note" id="c-note"></p>
+  <div class="scroll" id="cities-t"></div>
+</section>
+
+<section id="salary">
+  <h2>Pay</h2>
+  <p class="note" id="s-note"></p>
+  <div class="scroll" id="sal"></div>
+</section>
+
+<footer>
+  <h2 style="font-size:1.15rem">Method and limits</h2>
+  <p>Postings are collected weekly, kept raw, then cleaned, deduplicated (same title, company and city counts once) and tagged with skills by a dictionary matcher. Trends use the week a posting was first seen and a Cochran-Armitage test for a linear trend in proportions. Trend, pair and city findings are corrected for multiple testing with Benjamini-Hochberg at 5%. Skills below the minimum sample sizes are not reported.</p>
+  <p>Known limits: skill extraction is a dictionary, so it misses skills named in unusual ways; job APIs often return truncated descriptions; most postings carry no salary, so pay figures describe a self-selected minority; the planner measures fit to what postings list, not interview outcomes. Generated __GENERATED__.</p>
+</footer>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+const D = __DATA__;
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const pct = (x, d = 0) => (x * 100).toFixed(d) + '%';
+const css = (v) => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+
+/* ---------- pure planner logic (mirrors analysis.coverage / analysis.plan_gap) ---------- */
+function coverage(rows, have, thr) {
+  if (!rows.length) return 0;
+  let ok = 0;
+  for (const r of rows) {
+    let h = 0;
+    for (const s of r[2]) if (have.has(s)) h++;
+    if (h / r[2].length >= thr) ok++;
+  }
+  return ok / rows.length;
+}
+function planGap(P, haveNames, roleIdx, levelIdx, k, thr) {
+  const idx = new Map(P.skills.map((n, i) => [n, i]));
+  const have = new Set(haveNames.filter((n) => idx.has(n)).map((n) => idx.get(n)));
+  const rows = P.postings.filter((r) => (roleIdx < 0 || r[0] === roleIdx) && (levelIdx < 0 || r[1] === levelIdx));
+  const start = coverage(rows, have, thr);
+  const steps = [];
+  const cur = new Set(have);
+  for (let n = 0; n < k; n++) {
+    const base = coverage(rows, cur, thr);
+    let best = null;
+    for (let i = 0; i < P.skills.length; i++) {
+      if (cur.has(i)) continue;
+      const c = coverage(rows, new Set([...cur, i]), thr);
+      if (best === null || c > best[0]) best = [c, i];
+    }
+    if (!best || best[0] <= base) break;
+    cur.add(best[1]);
+    steps.push({skill: P.skills[best[1]], coverage: best[0], gain: best[0] - base});
+  }
+  return {n: rows.length, start, steps};
+}
+if (typeof module !== 'undefined') module.exports = {coverage, planGap};
+</script>
+<script>
+if (typeof document !== 'undefined') (function () {
+  const ov = D.overview;
+  $('meta').textContent = `${ov.n_postings.toLocaleString()} postings, ${ov.n_weeks} weeks (${ov.first_week} to ${ov.last_week}), ${ov.n_skills} skills tracked. Updated ${D.generated}.`;
+  if (ov.is_demo) $('banner').innerHTML = '<div class="banner"><strong>Demo data.</strong> These postings are synthetic, generated by <code>skillradar demo</code> to exercise the pipeline. Nothing on this page describes the real job market until you ingest real postings.</div>';
+  else if (ov.avg_skills < 3) $('banner').innerHTML = `<div class="banner"><strong>Short descriptions.</strong> Only ${ov.avg_skills} skills were found per posting on average (${pct(ov.no_skill_share)} had none), which usually means the source truncates job text. Shares below understate true demand, so compare skills with each other rather than reading them as absolute percentages.</div>`;
+  $('thr').textContent = pct(D.config.coverage_threshold);
+  const P = D.planner;
+  const table = (heads, rows) => '<table><thead><tr>' + heads.map((h, i) => `<th class="${h[1] ? 'n' : ''}">${esc(h[0])}</th>`).join('') + '</tr></thead><tbody>' +
+    rows.map((r) => '<tr>' + r.map((c, i) => `<td class="${heads[i][1] ? 'n' : ''}">${c}</td>`).join('') + '</tr>').join('') + '</tbody></table>';
+  const empty = (msg) => `<p class="meta">${esc(msg)}</p>`;
+  const noChart = typeof Chart === 'undefined';
+
+  /* ---------- planner ---------- */
+  const MIN_SLICE = 30;
+  const entryIdx = P.levels.indexOf('entry');
+  const entryN = P.postings.filter((r) => r[1] === entryIdx).length;
+  const state = {role: -1, level: entryN >= MIN_SLICE ? entryIdx : -1, have: new Set(D.profile.filter((n) => P.skills.includes(n)))};
+  $('p-role').innerHTML = '<option value="-1">All roles</option>' + P.roles.map((r, i) => `<option value="${i}">${esc(r)}</option>`).join('');
+  $('p-level').innerHTML = '<option value="-1">All levels</option>' + P.levels.map((l, i) => `<option value="${i}">${esc(l)}</option>`).join('');
+  $('p-level').value = String(state.level);
+  const chipSkills = [...new Set([...P.skills.slice(0, 48), ...state.have])];
+  $('p-chips').innerHTML = chipSkills.map((s) => `<button type="button" class="chip" data-s="${esc(s)}" aria-pressed="${state.have.has(s)}">${esc(s)}</button>`).join('');
+  function renderPlanner() {
+    const res = planGap(P, [...state.have], state.role, state.level, 5, D.config.coverage_threshold);
+    if (res.n < MIN_SLICE) {
+      $('p-now').innerHTML = `${res.n}<small>postings in this slice. Too few to advise. Widen the role or level, or collect more data.</small>`;
+      $('p-title').textContent = 'Not enough postings to recommend a next skill';
+      $('p-steps').innerHTML = '';
+      return;
+    }
+    $('p-now').innerHTML = `${pct(res.start)}<small>of ${res.n.toLocaleString()} postings in this slice fit your skills today</small>`;
+    $('p-title').textContent = res.steps.length ? 'Learn these next, in this order' : (res.n ? 'Nothing left to add that changes the result' : 'No postings in this slice');
+    $('p-steps').innerHTML = res.steps.map((s) => `<li><span>${esc(s.skill)}</span><span class="bar"><i style="width:${s.coverage * 100}%"></i><b style="width:${(s.coverage - s.gain) * 100}%"></b></span><span class="gain">+${(s.gain * 100).toFixed(1)} pts</span></li>`).join('');
+  }
+  $('p-role').onchange = (e) => { state.role = +e.target.value; renderPlanner(); };
+  $('p-level').onchange = (e) => { state.level = +e.target.value; renderPlanner(); };
+  $('p-chips').onclick = (e) => {
+    const b = e.target.closest('button'); if (!b) return;
+    const s = b.dataset.s;
+    state.have.has(s) ? state.have.delete(s) : state.have.add(s);
+    b.setAttribute('aria-pressed', state.have.has(s));
+    renderPlanner();
+  };
+  renderPlanner();
+
+  /* ---------- demand ---------- */
+  let demandChart;
+  $('d-role').innerHTML = '<option value="">All roles</option>' + Object.keys(D.roles.skills).map((r) => `<option>${esc(r)} (${D.roles.sizes[r]})</option>`).join('');
+  const roleKeys = Object.keys(D.roles.skills);
+  function renderDemand() {
+    if (noChart) return;
+    const i = $('d-role').selectedIndex - 1;
+    const rows = i < 0 ? D.top_skills.slice(0, 15) : D.roles.skills[roleKeys[i]];
+    if (demandChart) demandChart.destroy();
+    demandChart = new Chart($('c-demand'), {type: 'bar',
+      data: {labels: rows.map((r) => r.skill), datasets: [{data: rows.map((r) => r.share * 100), backgroundColor: css('--bar')}]},
+      options: {indexAxis: 'y', maintainAspectRatio: false, plugins: {legend: {display: false}, tooltip: {callbacks: {label: (c) => c.parsed.x.toFixed(1) + '% of postings'}}},
+        scales: {x: {ticks: {callback: (v) => v + '%', color: css('--muted')}, grid: {color: css('--rule')}}, y: {ticks: {color: css('--ink')}, grid: {display: false}}}}});
+  }
+  $('d-role').onchange = renderDemand; renderDemand();
+
+  /* ---------- trends ---------- */
+  const S = D.series, tr = D.trends;
+  $('t-note').textContent = D.trend_note || 'Share of each week\'s new postings that mention the skill. Skills flagged rising or falling passed a trend test with false discovery control; the rest are noise at this sample size.';
+  const flagged = (d) => tr.filter((t) => t.direction === d);
+  const palette = ['#2D5F8B', '#0B7A75', '#B23A2E', '#B8860B', '#6B4C9A', '#C2185B', '#4D7C0F', '#5B6B7A'];
+  const start = [...flagged('rising').slice(0, 3), ...flagged('falling').slice(-2)].map((t) => t.skill);
+  const sel = new Set(start.length ? start : Object.keys(S.share).slice(0, 4));
+  $('t-chips').innerHTML = Object.keys(S.share).map((s) => `<button type="button" class="chip" data-s="${esc(s)}" aria-pressed="${sel.has(s)}">${esc(s)}</button>`).join('');
+  let trendChart;
+  function renderTrend() {
+    if (noChart) return;
+    const key = $('t-ma').checked ? 'ma4' : 'share';
+    const ds = [...sel].map((s, i) => ({label: s, data: S[key][s], borderColor: palette[i % palette.length], backgroundColor: palette[i % palette.length], tension: .25, pointRadius: 2, borderWidth: 2}));
+    if (trendChart) trendChart.destroy();
+    trendChart = new Chart($('c-trend'), {type: 'line', data: {labels: S.weeks, datasets: ds},
+      options: {maintainAspectRatio: false, plugins: {legend: {labels: {color: css('--ink')}}, tooltip: {callbacks: {label: (c) => `${c.dataset.label}: ${c.parsed.y.toFixed(1)}%`}}},
+        scales: {y: {ticks: {callback: (v) => v + '%', color: css('--muted')}, grid: {color: css('--rule')}}, x: {ticks: {color: css('--muted'), maxTicksLimit: 8}, grid: {display: false}}}}});
+  }
+  $('t-chips').onclick = (e) => { const b = e.target.closest('button'); if (!b) return; const s = b.dataset.s; sel.has(s) ? sel.delete(s) : sel.add(s); b.setAttribute('aria-pressed', sel.has(s)); renderTrend(); };
+  $('t-ma').onchange = renderTrend; renderTrend();
+  const trendList = (title, rows, cls) => `<h3>${title}</h3>` + (rows.length ? table([['Skill'], ['First 3 wks', 1], ['Last 3 wks', 1], ['q', 1]],
+    rows.map((t) => [esc(t.skill), t.first_avg.toFixed(1) + '%', `<span class="${cls}">${t.last_avg.toFixed(1)}%</span>`, t.q < 0.001 ? '<0.001' : t.q.toFixed(3)])) : empty('None passed the trend test.'));
+  $('t-up').innerHTML = trendList('Rising', flagged('rising'), 'up');
+  $('t-down').innerHTML = trendList('Falling', flagged('falling').reverse(), 'down');
+
+  /* ---------- pairs ---------- */
+  const maxPhi = Math.max(0.01, ...D.pairs.map((p) => p.phi));
+  $('pairs').innerHTML = D.pairs.length ? table([['Pair'], ['Postings with both', 1], ['Lift', 1], ['Association']],
+    D.pairs.map((p) => [`${esc(p.skill_a)} + ${esc(p.skill_b)}`, p.n_both, p.lift.toFixed(1) + 'x', `<span class="mini" style="width:${(p.phi / maxPhi) * 8}rem"></span> ${p.phi.toFixed(2)}`])) : empty('No pair passed the support and significance filters yet.');
+
+  /* ---------- levels ---------- */
+  const lv = D.levels;
+  if (lv.length) {
+    const rowsE = lv.slice(0, 10).map((r) => [esc(r.skill), pct(r.entry_share), pct(r.senior_share)]);
+    const bySen = [...lv].filter((r) => r.n_senior >= 10).sort((a, b) => a.ratio - b.ratio).slice(0, 10).map((r) => [esc(r.skill), pct(r.entry_share), pct(r.senior_share)]);
+    $('lv-entry').innerHTML = '<h3>Most asked of freshers</h3>' + table([['Skill'], ['Entry', 1], ['Senior', 1]], rowsE);
+    $('lv-senior').innerHTML = '<h3>Skills that grow with seniority</h3>' + table([['Skill'], ['Entry', 1], ['Senior', 1]], bySen);
+  } else { $('lv-entry').innerHTML = empty('Needs at least 30 entry-level and 30 senior postings.'); }
+
+  /* ---------- opportunity ---------- */
+  $('opp').innerHTML = D.opportunity.length ? table([['Skill'], ['Score', 1], [D.opportunity_basis === 'entry' ? 'Entry demand' : 'Overall demand', 1], ['Growth (pts/wk)', 1], ['Roles it appears in', 1]],
+    D.opportunity.map((o) => [esc(o.skill), o.score.toFixed(0), pct(o.entry_share), (D.trend_note ? '\u2013' : (o.slope >= 0 ? '+' : '') + o.slope.toFixed(2)), o.breadth])) : empty('Not enough data yet.');
+
+  /* ---------- cities ---------- */
+  const anyCity = D.cities.some((c) => c.distinctive.length);
+  $('c-note').textContent = !D.cities.length ? 'A city is compared only once it has 50 postings, so this fills in as data accumulates.'
+    : anyCity ? 'Skills over-represented in a city compared with the national mix (location quotient above 1.25, significant after correction).'
+    : 'No skill is distinctly local at this sample size, after multiple-testing correction.';
+  $('cities-t').innerHTML = D.cities.length ? table([['City'], ['Postings', 1], ['Share', 1], ['Over-represented here']],
+    D.cities.map((c) => [esc(c.city), c.postings.toLocaleString(), pct(c.share), c.distinctive.length ? c.distinctive.map((d) => `${esc(d.skill)} (${d.lq}x)`).join(', ') : '<span class="meta">nothing significant</span>'])) : empty('No city has 50 postings yet.');
+
+  /* ---------- salary ---------- */
+  const sal = D.salary;
+  if (sal.coverage < 0.05) {
+    $('s-note').textContent = `Only ${pct(sal.coverage)} of postings state a salary (${sal.n.toLocaleString()} postings). Indian job posts rarely publish pay, so pay is not analysed until coverage improves.`;
+    $('sal').innerHTML = '';
+  } else
+  $('s-note').textContent = `Only ${pct(sal.coverage)} of postings state a salary (${sal.n.toLocaleString()} postings), so this is a view of the postings that disclose pay, not the market. The premium compares a posting to the median for the same role family and level, so it is not just seniority in disguise. Ranges are 90% bootstrap intervals. Shown: the ten largest and five smallest premiums.`;
+  const salRows = sal.rows.length > 15 ? [...sal.rows.slice(0, 10), ...sal.rows.slice(-5)] : sal.rows;
+  if (sal.coverage >= 0.05) $('sal').innerHTML = sal.rows.length ? table([['Skill'], ['Postings with pay', 1], ['Median LPA', 1], ['Premium vs same role and level', 1]],
+    salRows.map((r) => [esc(r.skill), r.n, r.median_lpa.toFixed(1), `<span class="${r.lo > 0 ? 'up' : r.hi < 0 ? 'down' : ''}">${(r.premium * 100).toFixed(0)}%</span> <span class="meta">(${(r.lo * 100).toFixed(0)}% to ${(r.hi * 100).toFixed(0)}%)</span>`])) : empty('Not enough postings with salary yet.');
+})();
+</script>
+</body>
+</html>
