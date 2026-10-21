@@ -58,8 +58,23 @@ Index("ix_ps_skill", posting_skills.c.skill_id)
 
 
 def get_engine(url: str | None = None):
-    return create_engine(url or config.DATABASE_URL, future=True)
-
+    return create_engine(
+    url or config.DATABASE_URL,
+    future=True,
+    pool_pre_ping=True,
+    pool_recycle=300,
+    **(
+        {"connect_args": {
+            "keepalives": 1,
+            "keepalives_idle": 30,
+            "keepalives_interval": 10,
+            "keepalives_count": 5,
+        }}
+        if (url or config.DATABASE_URL).startswith("postgres")
+        else {}
+    ),
+)
+    
 
 def init_db(engine) -> None:
     """Create tables and seed the skill dimension (idempotent)."""

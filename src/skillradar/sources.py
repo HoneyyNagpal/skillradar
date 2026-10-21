@@ -5,6 +5,8 @@ import json
 import logging
 import time
 from datetime import datetime, timezone
+from sqlalchemy.exc import OperationalError
+import time
 
 import requests
 from sqlalchemy import insert
@@ -52,14 +54,24 @@ def adapt(source: str, payload: dict) -> dict:
     return {k: payload.get(k) for k in COMMON_FIELDS}
 
 
-def store_raw(engine, source: str, payloads: list[dict], fetched_at: datetime | None = None) -> int:
-    fetched_at = fetched_at or datetime.now(timezone.utc).replace(tzinfo=None)
-    rows = [{"source": source, "fetched_at": fetched_at, "payload": json.dumps(p, default=str), "processed": 0}
-            for p in payloads]
-    if rows:
-        with engine.begin() as conn:
-            conn.execute(insert(raw_postings), rows)
+def store_raw(engine, source, payloads, fetched_at=None):
+    fetched_at = fetched_at or datetime.utcnow()
+    rows = [{"source": source, "fetched_at": fetched_at,
+             "payload": json.dumps(p), "processed": 0} for p in payloads]
+    for i in range(0, len(rows), 50):
+        chunk = rows[i:i+50]
+        for attempt in range(3):
+            try:
+                with engine.begin() as conn:
+                    conn.execute(insert(raw_postings), chunk)
+                break
+            except OperationalError:
+                if attempt == 2:
+                    raise
+                engine.dispose()
+                time.sleep(5)
     return len(rows)
+
 
 
 # ---------------------------------------------------------------- Adzuna
