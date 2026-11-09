@@ -1,65 +1,65 @@
 # Findings
 
-1,264 tech postings over 4 weeks. Python appears in 41% of them, ahead of SQL (37%) and Git (31%). Trends need more weeks of data before they mean anything.
+1,577 tech postings over 5 weeks. Python appears in 40% of them, ahead of SQL (36%) and Git (31%). Trends need more weeks of data before they mean anything.
 
-Window: 2026-09-28 to 2026-10-26. Salary stated in 0% of postings. Average 7.32 recognised skills per posting; 15.4% of postings matched none.
+Window: 2026-09-28 to 2026-11-09. Salary stated in 0% of postings. Average 7.23 recognised skills per posting; 15.5% of postings matched none.
 
 ## Most requested skills
 
 | Skill | Postings | Share |
 |---|---:|---:|
-| Python | 516 | 40.8% |
-| SQL | 464 | 36.7% |
-| Git | 394 | 31.2% |
-| CI/CD | 343 | 27.1% |
-| AWS | 299 | 23.7% |
-| REST APIs | 283 | 22.4% |
-| Agile | 283 | 22.4% |
-| Azure | 267 | 21.1% |
-| Java | 251 | 19.9% |
-| Machine Learning | 247 | 19.5% |
+| Python | 633 | 40.1% |
+| SQL | 560 | 35.5% |
+| Git | 490 | 31.1% |
+| CI/CD | 429 | 27.2% |
+| AWS | 371 | 23.5% |
+| REST APIs | 348 | 22.1% |
+| Agile | 338 | 21.4% |
+| Azure | 325 | 20.6% |
+| Java | 307 | 19.5% |
+| Machine Learning | 300 | 19.0% |
 
 ## Trends
 
-Only 4 weeks of data. Trends need at least 6; keep the weekly job running.
+Only 5 weeks of data. Trends need at least 6; keep the weekly job running.
 ## Skills that travel together
 
 | Pair | Both | Lift | Phi |
 |---|---:|---:|---:|
-| HTML + CSS | 135 | 7.8x | 0.90 |
-| TensorFlow + PyTorch | 52 | 16.4x | 0.81 |
-| Pandas + NumPy | 33 | 21.9x | 0.75 |
-| Flask + FastAPI | 45 | 14.9x | 0.72 |
-| Django + Flask | 42 | 15.8x | 0.71 |
-| Docker + Kubernetes | 147 | 4.7x | 0.69 |
-| RAG + Vector Databases | 41 | 14.4x | 0.67 |
-| TensorFlow + scikit-learn | 34 | 16.6x | 0.65 |
-| JavaScript + HTML | 125 | 4.9x | 0.65 |
-| JavaScript + CSS | 127 | 4.8x | 0.64 |
+| HTML + CSS | 171 | 7.6x | 0.90 |
+| TensorFlow + PyTorch | 64 | 16.6x | 0.81 |
+| Pandas + NumPy | 42 | 23.3x | 0.78 |
+| RAG + Vector Databases | 61 | 13.5x | 0.71 |
+| Docker + Kubernetes | 183 | 4.8x | 0.70 |
+| Flask + FastAPI | 52 | 15.1x | 0.69 |
+| Django + Flask | 48 | 16.2x | 0.69 |
+| TensorFlow + scikit-learn | 42 | 17.2x | 0.66 |
+| C# + .NET | 50 | 14.3x | 0.66 |
+| JavaScript + HTML | 156 | 4.9x | 0.65 |
 
 ## Where a new skill pays off first (heuristic)
 
 | Skill | Score | Entry demand | Growth pts/wk | Roles |
 |---|---:|---:|---:|---:|
-| Python | 87 | 29% | +0.00 | 9 |
-| SQL | 85 | 28% | +0.00 | 8 |
-| Git | 85 | 22% | +0.00 | 9 |
-| Data Visualization | 81 | 18% | +0.00 | 6 |
-| Java | 80 | 14% | +0.00 | 7 |
-| REST APIs | 79 | 14% | +0.00 | 6 |
-| JavaScript | 79 | 16% | +0.00 | 5 |
-| React | 76 | 12% | +0.00 | 5 |
-| CSS | 75 | 12% | +0.00 | 4 |
-| Agile | 75 | 7% | +0.00 | 9 |
+| Python | 88 | 29% | +0.00 | 9 |
+| SQL | 85 | 27% | +0.00 | 8 |
+| Git | 85 | 23% | +0.00 | 8 |
+| Data Visualization | 81 | 17% | +0.00 | 6 |
+| REST APIs | 80 | 15% | +0.00 | 6 |
+| Java | 79 | 14% | +0.00 | 7 |
+| JavaScript | 79 | 18% | +0.00 | 4 |
+| CSS | 77 | 14% | +0.00 | 4 |
+| React | 76 | 13% | +0.00 | 5 |
+| HTML | 76 | 14% | +0.00 | 4 |
 
 ## Gap plan for the configured profile (entry level, all roles)
 
-Profile fits 6% of 223 postings today.
-1. Add **Excel**: 12% (+5.8 pts)
-2. Add **Data Visualization**: 22% (+9.9 pts)
-3. Add **Tableau**: 34% (+11.7 pts)
-4. Add **JavaScript**: 39% (+5.4 pts)
-5. Add **CSS**: 47% (+7.6 pts)
+Profile fits 7% of 280 postings today.
+1. Add **Excel**: 11% (+4.6 pts)
+2. Add **Data Visualization**: 20% (+8.9 pts)
+3. Add **Tableau**: 31% (+10.4 pts)
+4. Add **JavaScript**: 36% (+5.0 pts)
+5. Add **CSS**: 44% (+8.6 pts)
 
 ## Limits
 
